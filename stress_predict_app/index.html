@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<--The contents of the `student_stress_app` folder represent an **additional extension** of this project.
+This web application was developed **separately from the core dataset analysis** to demonstrate how the
+trained machine learning model can be deployed in a simple, user-friendly interface.
+
+The main focus of the project remains the data analysis, modeling, and evaluation presented in the notebook.
+The application is included as an optional enhancement for practical demonstration purposes. -->
+<html lang="en">
+<head>
+    <title>Student Stress Predictor</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f8;
+            padding: 40px;
+        }
+        .container {
+            background: white;
+            padding: 25px;
+            max-width: 450px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ccc;
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+        }
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 15px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        #result {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h2>Student Stress Level Predictor</h2>
+
+    <label>Sleep Quality (0–5)</label>
+    <select id="sleep_quality">
+        <option value="0">Very Poor</option>
+        <option value="1">Poor</option>
+        <option value="2">Average</option>
+        <option value="3">Good</option>
+        <option value="4">Very Good</option>
+        <option value="5">Excellent</option>
+    </select>
+
+    <label>Headaches per Week (0–5)</label>
+    <select id="headaches">
+        <option value="0">Never</option>
+        <option value="1">Rare</option>
+        <option value="2">Sometimes</option>
+        <option value="3">Often</option>
+        <option value="4">Very Often</option>
+        <option value="5">Always</option>
+    </select>
+
+    <label>Academic Performance (1–5)</label>
+    <select id="academic_performance">
+        <option value="1">Very Low</option>
+        <option value="2">Low</option>
+        <option value="3">Average</option>
+        <option value="4">Good</option>
+        <option value="5">Excellent</option>
+    </select>
+
+    <label>Study Load (1–5)</label>
+    <select id="study_load">
+        <option value="1">Very Light</option>
+        <option value="2">Light</option>
+        <option value="3">Moderate</option>
+        <option value="4">Heavy</option>
+        <option value="5">Very Heavy</option>
+    </select>
+
+    <label>Extracurricular Activities (0–5)</label>
+    <select id="extracurricular">
+        <option value="0">None</option>
+        <option value="1">Rare</option>
+        <option value="2">Occasional</option>
+        <option value="3">Regular</option>
+        <option value="4">Frequent</option>
+        <option value="5">Very Frequent</option>
+    </select>
+
+    <button onclick="predictStress()">Check My Stress Level</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+function predictStress() {
+    const data = {
+        sleep_quality: document.getElementById("sleep_quality").value,
+        headaches: document.getElementById("headaches").value,
+        academic_performance: document.getElementById("academic_performance").value,
+        study_load: document.getElementById("study_load").value,
+        extracurricular: document.getElementById("extracurricular").value
+    };
+
+    fetch("/predict", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        document.getElementById("result").innerHTML =
+            `<b>Stress Level:</b> ${result.stress_level} <br>
+             <b>Stress Score:</b> ${result.stress_value}`;
+    });
+}
+</script>
+
+</body>
+</html>
