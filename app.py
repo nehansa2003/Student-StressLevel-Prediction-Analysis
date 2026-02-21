@@ -1,3 +1,9 @@
+#The contents of the `student_stress_app` folder represent an **additional extension** of this project.
+#This web application was developed **separately from the core dataset analysis** to demonstrate how the
+#trained machine learning model can be deployed in a simple, user-friendly interface.
+
+#The main focus of the project remains the data analysis, modeling, and evaluation presented in the notebook.
+#The application is included as an optional enhancement for practical demonstration purposes.
 from flask import Flask, request, jsonify, render_template
 import joblib
 import pandas as pd
