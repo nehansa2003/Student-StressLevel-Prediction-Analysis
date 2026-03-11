@@ -7,9 +7,17 @@
 from flask import Flask, request, jsonify, render_template
 import joblib
 import pandas as pd
+import os
+import joblib
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 app = Flask(__name__)
+#model_path = os.path.join(BASE_DIR, "student_stress_rf_model.pkl")
+#scaler_path = os.path.join(BASE_DIR, "stress_scaler.pkl")
 
+#model = joblib.load(model_path)
+#scaler = joblib.load(scaler_path)
 # Load model and scaler
 model = joblib.load("student_stress_rf_model.pkl")
 scaler = joblib.load("stress_scaler.pkl")
