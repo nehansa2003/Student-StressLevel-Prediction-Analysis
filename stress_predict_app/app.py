@@ -61,6 +61,14 @@ def predict():
         "Study_Burden_Index": study_burden_index,
         "Study_load_sleep_balance": study_load_sleep_balance
     }])
+    # Define stress classification function
+    def stress_class(level):
+     if level <= 0.25:
+        return "Healthy"
+     elif level >0.25 and level <= 0.55:
+        return "Moderate"
+     else:
+        return "High"
 
     input_scaled = scaler.transform(input_df)
     stress_value = model.predict(input_scaled)[0]
@@ -70,6 +78,9 @@ def predict():
         "stress_value": round(stress_value, 3),
         "stress_level": stress_label
     })
+
+#cd C:\Users\USER\Documents\Student_stress_app\Student-StressLevel-Prediction-Analysis\stress_predict_app
+#python app.py
 
 if __name__ == "__main__":
     app.run(debug=True)
